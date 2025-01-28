@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h1>tasks</h1>
+
+{% for task in tasks %}
+
+<div class="task">
+    <a href="{% url 'task_detail' task.id %}"> <!-- Esto es un enlace (link) en HTML. Lo que va dentro del atributo href es la dirección a la que te llevará cuando hagas clic en el enlace. -->
+
+        {% if task.important == True %}
+    
+        <h2>{{ task.title }}</h2>
+
+        {% else %} 
+        {{task.title}}
+
+        {% endif %}
+
+    </a>
+
+    <p><strong>descripcion: </strong> {{ task.description }}</p>
+    <p><strong>tarea completada:</strong> {{ task.datecompleted }}</p>
+    <p><strong>Important:</strong> {{ task.important|yesno:"Yes,No" }}</p>
+    <p><strong>Assigned to:</strong> {{ task.user.username }}</p>
+
+    
+</div>
+
+<hr>
+{% endfor %}
+
+
+
+{% endblock %}

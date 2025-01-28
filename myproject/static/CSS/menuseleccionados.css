@@ -1,0 +1,47 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Alternar filas con clase `child-row` */
+.child-row {
+    display: none; /* Ocultas por defecto */
+}
+
+button.toggle-button {
+    width: 100%;
+    padding: 8px;
+    background-color: #F9F9F9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center; /* Alinea horizontalmente */
+    align-items: center; /* Alinea verticalmente */
+    text-align: center; /* Alinea el texto */
+    vertical-align: middle; /* Alinea verticalmente */
+}
+
+button.toggle-button:hover {
+    background-color: #f1f1f1;
+}
