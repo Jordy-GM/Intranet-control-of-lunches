@@ -1,0 +1,104 @@
+/* Estilos solo para el menú dentro de #menu-container */
+#menu-container {
+    position: fixed;
+    top: 10px; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    border-radius: 30px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#menu-container ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+#menu-container li {
+    text-align: center;
+    position: relative;
+}
+
+#menu-container a {
+    text-decoration: none;
+    color: #007aff;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 20px;
+    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+    display: inline-block;
+    font-size: 15px;
+}
+
+#menu-container a:hover {
+    background: rgba(0, 122, 255, 0.05);
+    color: #007aff;
+    box-shadow: inset 0 0 4px rgba(0, 122, 255, 0.2);
+}
+
+#menu-container a:active {
+    background: rgba(0, 122, 255, 0.1);
+    color: #fff;
+    transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+
+#menu-container ul li > ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    border-radius: 10px;
+    min-width: 150px;
+}
+
+#menu-container ul li:hover > ul {
+    display: block;
+}
+
+#menu-container ul li > ul li {
+    text-align: left;
+    padding: 8px 15px;
+}
+
+#menu-container ul li > ul li a {
+    padding: 8px 20px;
+    font-size: 14px;
+}
+
+#menu-container ul li > ul li a:hover {
+    background: rgba(0, 122, 255, 0.1);
+    color: #000aff;
+}
+
+@media (max-width: 768px) {
+    #menu-container {
+        height: 50px;
+        width: 90%;
+        padding: 0 15px;
+    }
+
+    #menu-container ul {
+        gap: 15px;
+        font-size: 14px;
+    }
+
+    #menu-container a {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+}

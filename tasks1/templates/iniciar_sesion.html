@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1> iniciar </h1>
+
+<form action="/Signin/" method="post">
+
+    {% csrf_token %}
+
+    {{form.as_p}}
+
+    <button>
+        iniciar sesion
+    </button>
+
+</form>
+
+
+{% endblock %}

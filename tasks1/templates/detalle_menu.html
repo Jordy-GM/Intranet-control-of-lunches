@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Editar Menú</h1>
+
+<!-- Mostrar mensaje de error si existe -->
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+
+<!-- Formulario para editar el menú -->
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Actualizar</button>
+</form>
+
+<form action="{% url 'eliminar_menu' menu.id %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">
+        eliminar
+    </button>
+</form>
+
+{% endblock %}
+

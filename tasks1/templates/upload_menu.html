@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+
+<h1><br><br></h1>
+
+<div class="form-container" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px;">
+    {% for form_key, form in forms.items %}
+    <form id="{{ form_key }}" method="POST">
+        {% csrf_token %}
+        <div class="form-card">
+            <h2>{{ form_key|slice:"4:" }}</h2> <!-- Para mostrar solo el día, si el formato es 'form1', 'form2', etc. -->
+            {{ form.as_p }}
+        </div>
+
+        <div style="margin-top: 20px;"></div>
+        <button type="button" class="styled-button" onclick="submitForm('{{ form_key }}')">
+            <span>Enviar {{ form_key }}</span>
+        </button>
+    </form>
+    {% endfor %}
+</div>
+
+
+<!-- Vincular el archivo CSS -->
+<link rel="stylesheet" href="{% static 'CSS/formularios.css' %}" >
+
+
+<h2>Menús Seleccionados</h2>
+
+{% if seleccion %}
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Usuario</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Menú</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Fecha del Menú</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Fecha de Selección</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario, items in seleccion.items %}
+                <!-- Fila del botón con datos principales -->
+                <tr class="main-row" data-user="{{ usuario }}">
+                    <td colspan="4" style="border: 1px solid #ddd; padding: 8px;">
+                        <button 
+                            class="toggle-button" 
+                            data-user="{{ usuario }}" 
+                            style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 5px; background-color: #f9f9f9; border: 1px solid #ccc; border-radius: 5px;">
+                            <span style="flex: 0.24; text-align: center; margin-left: 80px; margin-right: 0px;">| {{ usuario }}</span>
+                            {% with items.0 as first_item %}
+                                <span style="flex: 1; text-align: center; margin-left: 28px; margin-right: 0px;">{{ first_item.menu.option_number }}</span>
+                                <span style="flex: 1; text-align: center; margin-left: 0px; margin-right: 225px;">| {{ first_item.menu.day }}</span>
+                                <span style="flex: 1; text-align: center; margin-left: 0px; margin-right: 165px;">| {{ first_item.date_selected }}</span>
+                            {% endwith %}
+                        </button>
+                    </td>
+                </tr>
+                <!-- Filas de datos detallados -->
+                {% for item in items %}
+                    <tr class="child-row user-{{ usuario }}" style="display: none;">
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ item.user.username }}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ item.menu.option_number }}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ item.menu.day }}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ item.date_selected }}</td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No hay menús seleccionados.</p>
+{% endif %}
+
+
+
+
+
+<!-- Enlazar el archivo JS -->
+<script src="{% static 'JS/menuseleccionados.js' %}"></script>
+</body> 
+
+<!-- Vincular el archivo CSS -->
+<link rel="stylesheet" href="{% static 'CSS/menuseleccionados.css' %}"> 
+
+
+<!-- Vincular el archivo CSS --
+<link rel="stylesheet" href="{% static 'CSS/subirmenu.css' %}" -->
+
+
+
+
+<script>
+    function submitForm(formId) {
+        var form = document.getElementById(formId);
+        var formData = new FormData(form);
+
+        fetch("{% url 'upload_menu' %}", {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
+            },
+        })
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error("Error en la respuesta del servidor: " + response.status);
+            }
+        })
+        .then((data) => {
+            console.log("Respuesta del servidor:", data);
+            if (data.status === "success") {
+                alert("Formulario " + formId + " enviado exitosamente");
+            } else {
+                alert("Error al enviar el formulario " + formId);
+                console.log(data.errors);
+            }
+        })
+        .catch((error) => {
+            console.error("Error en el envío:", error);
+            alert("Error en el envío del formulario " + formId);
+        });
+    }
+</script>
+
+
+
+
+{% endblock %}

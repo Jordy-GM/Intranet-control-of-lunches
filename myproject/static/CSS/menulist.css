@@ -1,0 +1,134 @@
+/* Contenedor principal para organizar estilos específicos */
+#menu-page {
+    padding: 20px;
+    background-color: #f4f7fc;
+    border-radius: 15px;
+}
+
+/* Título */
+#menu-page h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Contenedor de las tarjetas */
+#menu-page form {
+    display: flex;
+    flex-wrap: wrap; /* Permite que las tarjetas se ajusten si no caben en una fila */
+    gap: 20px; /* Espaciado entre las tarjetas */
+    justify-content: center; /* Centra las tarjetas horizontalmente */
+}
+
+/* Tarjetas de menú */
+#menu-page .menu-card {
+    border: 1px solid #d1d1d6;
+    padding: 10px; /* Reducir el espacio interno */
+    border-radius: 15px;
+    width: 200px; /* Ancho fijo para que sean más pequeñas */
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#menu-page .menu-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo de las etiquetas */
+#menu-page label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1c1c1e;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* Listas de detalles de cada menú */
+#menu-page ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+    color: #6e6e73;
+    font-size: 12px; /* Reducir tamaño de fuente */
+}
+
+#menu-page ul li {
+    margin-bottom: 5px;
+}
+
+/* Checkbox */
+#menu-page input[type="checkbox"] {
+    accent-color: #007aff;
+    transform: scale(1.2);
+    margin-right: 10px;
+}
+
+/* Botón estilizado */
+#menu-page .styled-button {
+    display: block; /* Cambiado de inline-flex a block */
+    width: 200px; /* Ancho limitado para no ser demasiado grande */
+    height: 50px; /* Fijar la altura del botón */
+    margin: 20px auto; /* Centrado y espaciado entre el botón y las tarjetas */
+    background-color: #FF9500;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 12px 24px;
+    border: 1px solid #d1d1d6;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 200px; /* Asegura que el botón no se expanda más de 200px */
+}
+
+#menu-page .styled-button:hover {
+    background-color: #FF7F00;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* MEDIA QUERIES PARA RESPONSIVIDAD */
+
+/* Pantallas grandes (más de 1024px) */
+@media (min-width: 1024px) {
+    #menu-page .menu-card {
+        width: 200px; /* Ancho fijo para las tarjetas */
+    }
+
+    #menu-page .styled-button {
+        width: 20%; /* Se mantiene el tamaño original del botón */
+        max-width: 300px; /* El botón no se hace más grande de 300px */
+    }
+}
+
+/* Pantallas medianas (Tabletas) entre 768px y 1023px */
+@media (max-width: 1023px) {
+    #menu-page .menu-card {
+        width: 150px; /* Las tarjetas se reducen a 150px */
+    }
+
+    #menu-page .styled-button {
+        width: 30%; /* El botón ocupa el 30% del ancho */
+        max-width: 250px; /* El botón no supera los 250px de ancho */
+    }
+}
+
+/* Pantallas pequeñas (móviles) menores a 768px */
+@media (max-width: 768px) {
+    #menu-page form {
+        justify-content: center; /* Centra las tarjetas en pantallas pequeñas */
+    }
+
+    #menu-page .menu-card {
+        width: 100%; /* Las tarjetas ocupan el 100% del ancho disponible */
+    }
+
+    #menu-page .styled-button {
+        width: 200px; /* El botón sigue siendo de tamaño fijo */
+        height: 50px; /* Asegura que el botón tenga una altura constante */
+        max-width: 200px; /* El botón no se agranda más */
+        margin-top: 10px; /* Menor espacio entre las tarjetas y el botón */
+    }
+}

@@ -1,0 +1,64 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Aplicacion</title>
+    
+    <!-- Vincular el archivo CSS -->
+    <link rel="stylesheet" href="{% static 'CSS/homemenu.css' %}" >
+
+</head>
+
+<body>
+    <!-- Contenedor específico para el menú -->
+    <nav id="menu-container">
+        <ul>
+            <li>
+                <a href="/">Home</a>
+            </li>
+
+            {% if user.is_authenticated %}
+                <li>
+                    <a href="/tasks">Tareas</a>
+                </li>
+                <li>
+                    <a href="/tasks_completed">Tareas_completadas</a>
+                </li>
+                <li>
+                    <a href="/create_tasks">crear tarea</a>
+                </li>
+                <li>
+                    <a href="{% url 'menu_list' %}">Lista de Menús</a>
+                </li>
+                <li>
+                    <a href="/logout">cerrar sesion</a>
+                </li>
+
+                {% if request.user.is_superuser or request.user.username == 'yandry' %}
+                    <li>
+                        <a href="{% url 'upload_menu' %}">Subir Menú</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'admin:index' %}">Admin</a>
+                    </li>
+                {% endif %}
+            {% else %}
+                <li>
+                    <a href="/Signup">registrarse </a>
+                </li>
+                <li>
+                    <a href="/Signin">iniciar sesion</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+</body>
+
+</html>

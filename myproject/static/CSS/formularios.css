@@ -1,0 +1,176 @@
+/* Estilos generales para los formularios */
+.form-container {
+    display: grid; /* Usamos un diseño de grid para organizar los formularios */
+    grid-template-columns: repeat(5, 1fr); /* 5 columnas de igual tamaño */
+    gap: 0px; /* Sin espacio entre los formularios */
+    padding: 26px; /* Padding para el contenedor */
+    background-color: #f4f7fc; /* Fondo gris claro tipo iCloud */
+    border-radius: 15px; /* Bordes redondeados en el contenedor */
+}
+
+/* Estilos para cada formulario individual */
+.form-card {
+    border: 1px solid #d1d1d6; /* Bordes suaves en color gris */
+    background-color: white; /* Fondo blanco para cada formulario */
+    padding: 20px; /* Espaciado dentro del formulario */
+    border-radius: 12px; /* Bordes redondeados para el formulario */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil alrededor del formulario */
+    transition: all 0.3s ease; /* Transición suave para efectos */
+}
+
+/* Estilo para el título dentro de cada formulario */
+.form-card h2 {
+    font-size: 20px; /* Tamaño de fuente grande para el título */
+    font-weight: 600; /* Peso de fuente en negrita */
+    color: #1c1c1e; /* Color oscuro para el texto */
+    margin-bottom: 10px; /* Espacio debajo del título */
+}
+
+/* Reemplazo de los números por los días de la semana usando ::before */
+.form-card:nth-of-type(1) h2::before {
+    content: "Menu"; /* Reemplazo para el formulario 1 */
+}
+
+
+/* Asegúrate de ocultar el contenido original de h2 */
+.form-card h2 {
+    visibility: hidden; /* Oculta el contenido original */
+    position: relative; /* Necesario para que ::before funcione correctamente */
+}
+
+/* El pseudo-elemento ::before debe estar visible */
+.form-card h2::before {
+    visibility: visible; /* Hace visible el contenido generado */
+    position: absolute; /* Asegura que el contenido generado esté en el lugar adecuado */
+    left: 0; /* Alinea el texto generado a la izquierda */
+    top: 0; /* Alinea el texto generado arriba */
+}
+
+
+
+
+/* Estilos para las etiquetas de los campos de formulario */
+.form-card label {
+    font-size: 13px; /* Cambia el tamaño de la fuente para las etiquetas */
+    color: #6e6e73; /* Color gris suave similar al diseño de iCloud */
+    margin-bottom: 0px; /* Espaciado debajo de la etiqueta */
+    font-weight: 500; /* Peso de la fuente medio para mejor visibilidad */
+}
+
+
+/* Estilos para los campos de formulario (inputs, selects y textareas) */
+.form-card input,
+.form-card select,
+.form-card textarea {
+    width: 50%; /* Los campos ocupan todo el ancho disponible */
+    padding: 6px; /* Espaciado interno de los campos */
+    margin: -2px 0px; /* Margen superior e inferior entre campos */
+    border-radius: 10px; /* Bordes redondeados en los campos */
+    border: 1px solid #d1d1d6; /* Borde gris claro */
+    font-size: 12px; /* Tamaño de la fuente en los campos */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* Tipografía similar a iCloud */
+}
+
+/* Estilos cuando el campo de formulario está enfocado */
+.form-card input:focus,
+.form-card select:focus,
+.form-card textarea:focus {
+    outline: none; /* Elimina el contorno predeterminado */
+    border-color: #007aff; /* Cambio de color de borde a azul cuando está enfocado */
+}
+
+/* Estilos para los botones */
+.styled-button {
+    display: flex; /* Usamos flexbox para el alineamiento */
+    align-items: center; /* Centra el contenido verticalmente */
+    background-color: #007aff; /* Fondo azul tipo iCloud */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde alrededor del botón */
+    padding: 12px 20px; /* Espaciado dentro del botón */
+    border-radius: 50px; /* Bordes completamente redondeados */
+    cursor: pointer; /* Muestra el puntero al pasar el cursor */
+    transition: background-color 0.3s ease; /* Transición suave en el cambio de color */
+    font-weight: 600; /* Fuente en negrita */
+    text-align: center; /* Centra el texto */
+    width: 100%; /* El botón ocupa todo el ancho disponible */
+}
+
+/* Estilo cuando el botón está en estado hover */
+.styled-button:hover {
+    background-color: #cfdbe7; /* Cambio de color al hacer hover sobre el botón */
+}
+
+/* Estilos para el ícono dentro del botón */
+.styled-button svg {
+    margin-left: 10px; /* Margen a la izquierda del ícono */
+    fill: white; /* Color blanco para el ícono */
+}
+
+/* Ajustes para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .form-container {
+        grid-template-columns: repeat(2, 1fr); /* Cambia a 2 columnas en pantallas pequeñas */
+    }
+}
+
+
+
+/* Estilo base del botón */
+button.styled-button {
+    display: inline-flex; /* Hace que el contenido interno del botón (como el texto) se alinee horizontalmente */
+    align-items: center; /* Alinea el contenido verticalmente en el centro */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    background-color: #FF9500; /* Fondo interior del botón (color naranja vibrante) */
+    color: #FFFFFF; /* Color del texto (blanco) */
+    font-size: 12px; /* Tamaño del texto */
+    font-weight: 400; /* Grosor del texto (seminegrita) */
+    border: 1px solid #d1d1d6; /* Color y grosor del borde (gris claro) */
+    border-radius: 12px; /* Bordes redondeados del botón */
+    padding: 12px 24px; /* Espaciado interno del botón (vertical x horizontal) */
+    cursor: pointer; /* Cambia el puntero a una mano al pasar el ratón */
+    transition: all 0.3s ease-in-out; /* Agrega una transición suave para cambios de estado */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Agrega una sombra ligera para dar profundidad */
+
+    padding: 12px 24px;
+    font-size: 16px;
+    width: auto; /* Se ajusta al contenido */
+    max-width: 100%; /* No excede el contenedor */
+    height: auto; /* Se adapta automáticamente */
+    margin-left: 67px; /* Ajusta este valor para moverlo más a la derecha */
+}
+
+/* ==============================
+   EFECTO HOVER (AL PASAR EL MOUSE)
+   ============================== */
+button.styled-button:hover {
+    background-color: #FF7F00; /* Cambia el color del fondo a un naranja más oscuro */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Aumenta la sombra para resaltar el botón */
+    transform: translateY(-2px); /* Mueve el botón ligeramente hacia arriba para simular elevación */
+}
+
+/* ==============================
+   EFECTO ACTIVE (AL HACER CLIC)
+   ============================== */
+button.styled-button:active {
+    background-color: #E57000; /* Cambia el fondo a un tono naranja más oscuro */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); /* Reduce la sombra para simular presión */
+    transform: translateY(2px); /* Mueve el botón hacia abajo para simular que se presiona */
+}
+
+/* ==============================
+   TEXTO DEL BOTÓN
+   ============================== */
+button.styled-button span {
+    font-weight: 400; /* Grosor del texto */
+    letter-spacing: 0.5px; /* Espaciado entre las letras para una mejor legibilidad */
+}
+
+/* ==============================
+   AJUSTES RESPONSIVOS
+   ============================== */
+@media (max-width: 480px) { /* Para pantallas pequeñas (como móviles) */
+    button.styled-button {
+        font-size: 14px; /* Reduce el tamaño del texto */
+        padding: 10px 20px; /* Ajusta el espaciado interno para adaptarse al tamaño reducido */
+    }
+}

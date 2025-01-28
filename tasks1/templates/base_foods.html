@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Menús</title>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a href="/">Inicio</a>
+            </li>
+
+            {% if user.is_authenticated %}
+            <li>
+                <a href="{% url 'upload_menu' %}">Subir Menú</a>
+            </li>
+
+            <li>
+                <a href="{% url 'menu_list' %}">Lista de Menús</a>
+            </li>
+
+            <li>
+                <a href="/logout">Cerrar Sesión</a>
+            </li>
+            {% else %}
+            <li>
+                <a href="/Signin">Iniciar Sesión</a>
+            </li>
+            <li>
+                <a href="/Signup">Registrarse</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="container">
+        {% block content %}
+        <!-- Aquí se insertará el contenido específico de cada vista -->
+        {% endblock %}
+    </div>
+
+</body>
+
+</html>
