@@ -2,9 +2,18 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-# Create your models here.
+# modelo de signup 
 
-# Este modelo define una estructura de datos para almacenar tareas en la base de datos.
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    department = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.user.username + ' | ' + self.department
+
+
+
+##############tareas@#####################
 class Task(models.Model):
 
     title = models.CharField(max_length=100)  # Campo de texto para el título de la tarea. Es obligatorio y tiene un máximo de 100 caracteres.
@@ -37,6 +46,16 @@ class Menu(models.Model):
     salad = models.CharField(max_length=100)
     drink = models.CharField(max_length=100)
     dessert = models.CharField(max_length=100)
+    
+    #campp ia m
+    name = models.CharField(max_length=255, default="Sin nombre")
+    description = models.TextField(blank=True)
+    calories = models.IntegerField(default=0)
+    fats = models.IntegerField(default=0)
+    carbohydrates = models.IntegerField(default=0)
+    gluten_free = models.BooleanField(default=False)
+    vegan = models.BooleanField(default=False)
+    low_carb = models.BooleanField(default=False)
 
     def __str__(self):
         return f'Menu {self.option_number} para el dia {self.day}'

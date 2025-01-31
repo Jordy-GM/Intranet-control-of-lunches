@@ -23,70 +23,96 @@
         </button>
     </form>
     {% endfor %}
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
 </div>
+
 
 
 <!-- Vincular el archivo CSS -->
 <link rel="stylesheet" href="{% static 'CSS/formularios.css' %}" >
 
 
-<h2>Menús Seleccionados</h2>
 
+<h1 class="title" style="
+text-align: center;
+color: #1F1F1F;
+margin-bottom: 20px;
+font-size: 32px;
+text-transform: capitalize;
+letter-spacing: -.24px;
+padding-bottom: 10px;
+font-family: SF Pro Display, Helvetica Neue, sans-serif;
+font-weight: 550;
+line-height: 36px;
+box-sizing: border-box;
+-webkit-tap-highlight-color: transparent;
+background: linear-gradient(to bottom, #FFFFFF, #FFFFFF); /* Fondo degradado de blanco a gris */
+border: 1px solid #f4f7fc; /* Borde gris claro */
+padding: 20px; /* Añade un poco de padding para que el texto no esté pegado al borde */
+border-radius: 10px; /* Bordes redondeados para un aspecto moderno */
+background-color: #f4f7fc; /* Fondo gris claro tipo iCloud */
+">
 {% if seleccion %}
-    <table style="width: 100%; border-collapse: collapse;">
-        <thead>
-            <tr>
-                <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Usuario</th>
-                <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Menú</th>
-                <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Fecha del Menú</th>
-                <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Fecha de Selección</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for usuario, items in seleccion.items %}
-                <!-- Fila del botón con datos principales -->
-                <tr class="main-row" data-user="{{ usuario }}">
-                    <td colspan="4" style="border: 1px solid #ddd; padding: 8px;">
-                        <button 
-                            class="toggle-button" 
-                            data-user="{{ usuario }}" 
-                            style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 5px; background-color: #f9f9f9; border: 1px solid #ccc; border-radius: 5px;">
-                            <span style="flex: 0.24; text-align: center; margin-left: 80px; margin-right: 0px;">| {{ usuario }}</span>
-                            {% with items.0 as first_item %}
-                                <span style="flex: 1; text-align: center; margin-left: 28px; margin-right: 0px;">{{ first_item.menu.option_number }}</span>
-                                <span style="flex: 1; text-align: center; margin-left: 0px; margin-right: 225px;">| {{ first_item.menu.day }}</span>
-                                <span style="flex: 1; text-align: center; margin-left: 0px; margin-right: 165px;">| {{ first_item.date_selected }}</span>
-                            {% endwith %}
-                        </button>
-                    </td>
-                </tr>
-                <!-- Filas de datos detallados -->
-                {% for item in items %}
-                    <tr class="child-row user-{{ usuario }}" style="display: none;">
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ item.user.username }}</td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ item.menu.option_number }}</td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ item.menu.day }}</td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ item.date_selected }}</td>
-                    </tr>
-                {% endfor %}
-            {% endfor %}
-        </tbody>
-    </table>
+    Menús Seleccionados
 {% else %}
-    <p>No hay menús seleccionados.</p>
+    No hay Menús Seleccionados
 {% endif %}
+</h1>
 
-
-
-
+    {% if seleccion %}
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Usuario</th>
+                    <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Menú</th>
+                    <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Fecha del Menú</th>
+                    <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Fecha de Selección</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario, items in seleccion.items %}
+                    <!-- Fila del botón con datos principales -->
+                    <tr class="main-row" data-user="{{ usuario }}">
+                        <td colspan="4" style="border: 1px solid #ddd; padding: 8px;">
+                            <button 
+                                class="toggle-button" 
+                                data-user="{{ usuario }}" 
+                                style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 5px; background-color: #f9f9f9; border: 1px solid #ccc; border-radius: 5px;">
+                                <span style="flex: 0.24; text-align: center; margin-left: 80px; margin-right: 0px;">| {{ usuario }}</span>
+                                {% with items.0 as first_item %}
+                                    <span style="flex: 1; text-align: center; margin-left: 28px; margin-right: 0px;">{{ first_item.menu.option_number }}</span>
+                                    <span style="flex: 1; text-align: center; margin-left: 0px; margin-right: 225px;">| {{ first_item.menu.day }}</span>
+                                    <span style="flex: 1; text-align: center; margin-left: 0px; margin-right: 165px;">| {{ first_item.date_selected }}</span>
+                                {% endwith %}
+                            </button>
+                        </td>
+                    </tr>
+                    <!-- Filas de datos detallados -->
+                    {% for item in items %}
+                        <tr class="child-row user-{{ usuario }}" style="display: none;">
+                            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ item.user.username }}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ item.menu.option_number }}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ item.menu.day }}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ item.date_selected }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    
+    {% endif %}
+    <div>
 
 <!-- Enlazar el archivo JS -->
 <script src="{% static 'JS/menuseleccionados.js' %}"></script>
-</body> 
+
 
 <!-- Vincular el archivo CSS -->
 <link rel="stylesheet" href="{% static 'CSS/menuseleccionados.css' %}"> 
 
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
 
 <!-- Vincular el archivo CSS --
 <link rel="stylesheet" href="{% static 'CSS/subirmenu.css' %}" -->
@@ -131,5 +157,104 @@
 
 
 
+
+
+
+<!--------------------------------------------------------- dashboard -------------------------------------------------------------->
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard iOS Style</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    
+        
+    <h1 class="title" style="
+    text-align: center;
+    color: #1F1F1F;
+    margin-bottom: 20px;
+    font-size: 32px;
+    text-transform: capitalize;
+    letter-spacing: -.24px;
+    padding-bottom: 10px;
+    font-family: SF Pro Display, Helvetica Neue, sans-serif;
+    font-weight: 550;
+    line-height: 36px;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    background: linear-gradient(to bottom, #FFFFFF, #FFFFFF); /* Fondo degradado de blanco a gris */
+    border: 1px solid #f4f7fc; /* Borde gris claro */
+    padding: 20px; /* Añade un poco de padding para que el texto no esté pegado al borde */
+    border-radius: 10px; /* Bordes redondeados para un aspecto moderno */
+    background-color: #f4f7fc; /* Fondo gris claro tipo iCloud */
+    ">
+    Dashboard de Análisis
+
+</h1>
+
+
+
+    <div class="graph-container">
+
+        <!-- Gráfico de Selecciones por Día -->
+    <div class="section">
+        <h2>Selecciones por Día</h2>
+        <div class="card">
+            <canvas id="selectionsByDayChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Gráfico de Selecciones por Mes -->
+    <div class="section">
+        <h2>Selecciones por Mes</h2>
+        <div class="card">
+            <canvas id="selectionsByMonthChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Gráfico de Selecciones por Departamento -->
+    <div class="section">
+        <h2>Selecciones por Departamento</h2>
+        <div class="card">
+            <canvas id="selectionsByDepartmentChart"></canvas>
+        </div>
+    </div>
+    
+    </div>
+    
+
+
+
+
+
+        <!-- Estadísticas Generales -->
+        <div class="stats-container">
+            <h2>Estadísticas Generales</h2>
+            <div class="stats-card">
+                <p>Total de Usuarios: <span class="highlight">{{ total_users }}</span></p>
+            </div>
+            <div class="stats-card">
+                <p>Total de Selecciones: <span class="highlight">{{ total_selections }}</span></p>
+            </div>
+        </div>
+
+    
+</body>
+</html>
+
+
+
+<!-- Enlazar el archivo JS -->
+<script src="{% static 'JS/Dashboard.js' %}"></script>
+</body> 
+
+<!-- Vincular el archivo CSS -->
+<link rel="stylesheet" href="{% static 'CSS/Dashboard.css' %}"> 
 
 {% endblock %}

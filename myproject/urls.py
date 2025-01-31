@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from tasks1 import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('Signup/', views.Signup, name='signup'),  # Nombre de la vista corregido a 'signup'
@@ -40,7 +41,6 @@ urlpatterns = [
     
     path('menu_list/<int:menu_id>/', views.detalle_menu, name='detalle_menu'),
     path('menu_list/<int:menu_id>/eliminar_menu', views.eliminar_menu, name='eliminar_menu'), 
-    
     
     
     

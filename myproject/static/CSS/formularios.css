@@ -52,9 +52,19 @@
 /* Estilos para las etiquetas de los campos de formulario */
 .form-card label {
     font-size: 13px; /* Cambia el tamaño de la fuente para las etiquetas */
-    color: #6e6e73; /* Color gris suave similar al diseño de iCloud */
+    color: #0000008F; /* Color gris suave similar al diseño de iCloud */
     margin-bottom: 0px; /* Espaciado debajo de la etiqueta */
     font-weight: 500; /* Peso de la fuente medio para mejor visibilidad */
+    line-height: 16px;
+    -webkit-margin-before: 6px;
+    margin-block-start: 6px;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: 400; /* Semibold */
+    letter-spacing: -.24px; /* Ajusta el espaciado entre letras, reduciéndolo ligeramente */
+    
 }
 
 
@@ -68,7 +78,8 @@
     border-radius: 10px; /* Bordes redondeados en los campos */
     border: 1px solid #d1d1d6; /* Borde gris claro */
     font-size: 12px; /* Tamaño de la fuente en los campos */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* Tipografía similar a iCloud */
+    font-family: SF Pro Text, Helvetica Neue, sans-serif;
+
 }
 
 /* Estilos cuando el campo de formulario está enfocado */
@@ -173,4 +184,17 @@ button.styled-button span {
         font-size: 14px; /* Reduce el tamaño del texto */
         padding: 10px 20px; /* Ajusta el espaciado interno para adaptarse al tamaño reducido */
     }
+}
+
+/* Estilos específicos para el título */
+.title {
+    text-align: center;
+    color: #c71111;
+    margin-bottom: 20px;
+    font-size: 2em; /* Tamaño de la fuente */
+    font-weight: bold; /* Negrita */
+    text-transform: uppercase; /* Mayúsculas */
+    letter-spacing: 2px; /* Espaciado entre letras */
+    border-bottom: 2px solid #dbde12; /* Línea inferior */
+    padding-bottom: 10px; /* Espaciado inferior */
 }

@@ -3,15 +3,20 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
-from .forms import CreateTaskForm, MenuForm
-from .models import Task, Menu, Menuselection
+from .forms import CreateTaskForm, MenuForm, CustomUserCreationForm
+from .models import Task, Menu, Menuselection, UserProfile
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.db import IntegrityError 
+from django.db import IntegrityError
 from django.http import JsonResponse
 from collections import defaultdict
 from itertools import groupby
 from operator import attrgetter
+from django.db.models import Count
+from django.db.models.functions import TruncMonth
+import requests
+from django.http import JsonResponse
+from django.core import serializers
 
 
 
@@ -83,7 +88,7 @@ def Signup(request):
         # Si el método de la solicitud es GET, renderiza la página 'signup.html'
         # y pasa el formulario 'UserCreationForm' como contexto a la plantilla.
         return render(request, 'signup.html', {
-            'form': UserCreationForm()
+            'form': CustomUserCreationForm
         })
     else:
         # Si el método de la solicitud es POST, comprueba que las contraseñas
@@ -108,12 +113,12 @@ def Signup(request):
                 # Si ocurre algún error, como que el nombre de usuario ya exista,
                 # devuelve una respuesta indicando que el nombre de usuario ya existe en la mima pagina con el formulario
                 return render(request, 'signup.html', {
-                    'form': UserCreationForm(),
+                    'form': CustomUserCreationForm,
                     "error": 'uuario ya existe'})
 
         # Si las contraseñas no coinciden, devuelve una respuesta indicando que no coinciden. con la mima pagina formulario
         return render(request, 'signup.html', {
-            'form': UserCreationForm(),
+            'form': CustomUserCreationForm,
             "error": 'la contraeña no eite'})
 
 
@@ -193,65 +198,68 @@ def complete_task(request, id):
 # Vista para que el administrador suba los menús
 
 
-
-
-@login_required  # Este decorador asegura que solo los usuarios autenticados puedan acceder a esta vista.
+# Este decorador asegura que solo los usuarios autenticados puedan acceder a esta vista.
+@login_required
 def upload_menu(request):
     # Verifica si el usuario es un superusuario o tiene el nombre de usuario 'yandry'.
-    if request.user.is_superuser or request.user.username == 'yandry': 
-        
-        # Si la solicitud es de tipo POST, se procesa el formulario enviado.
-        if request.method == 'POST':  
+    if request.user.is_superuser or request.user.username == 'yandry':
 
-            form_prefix = None   
+        # Si la solicitud es de tipo POST, se procesa el formulario enviado.
+        if request.method == 'POST':
+
+            form_prefix = None
             # Itera del 1 al 5 para identificar qué formulario fue enviado.
-            for i in range(1, 6): 
+            for i in range(1, 6):
                 if f'form{i}-day' in request.POST:
-                    form_prefix = f'form{i}'  # Asigna el prefijo del formulario encontrado.
+                    # Asigna el prefijo del formulario encontrado.
+                    form_prefix = f'form{i}'
                     break
 
             # Si se encontró un prefijo de formulario válido, se procesa el formulario.
             if form_prefix:
                 form = MenuForm(request.POST, prefix=form_prefix)
                 if form.is_valid():  # Valida el formulario.
-                    form.save()  # Guarda los datos del formulario en la base de datos.
-                    return JsonResponse({'status': 'success'})  # Retorna una respuesta JSON de éxito.
+                    # Guarda los datos del formulario en la base de datos.
+                    form.save()
+                    # Retorna una respuesta JSON de éxito.
+                    return JsonResponse({'status': 'success'})
                 else:
-                    return JsonResponse({'status': 'error', 'errors': form.errors})  # Retorna errores si el formulario no es válido.
+                    # Retorna errores si el formulario no es válido.
+                    return JsonResponse({'status': 'error', 'errors': form.errors})
 
         # Si la solicitud no es POST, se inicializan 5 formularios con prefijos únicos.
         forms = {f'form{i}': MenuForm(prefix=f'form{i}') for i in range(1, 6)}
-        
+
         # Lista de días de la semana para usar en la plantilla.
         days_of_week = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes']
-        
-        # Obtiene las selecciones de menú de la base de datos, agrupadas por usuario.
-        seleccion = Menuselection.objects.select_related('user', 'menu').order_by('user__username', 'menu__day')
-        grouped_data = {}
-        # Agrupa las selecciones por nombre de usuario.
-        for user, items in groupby(seleccion, key=attrgetter('user.username')):
-            grouped_data[user] = list(items)
-        
+
+        # Obtener datos de vista seleccionados
+        grouped = seleccionados(request)
+
+        # Obtener los datos de vista dashboard
+        dashboard_data = dashboard(request)
+
         # Renderiza la plantilla 'upload_menu.html' con los datos agrupados, los formularios y los días de la semana.
-        return render(request, 'upload_menu.html', {'seleccion': grouped_data, 'forms':forms, 'days_of_week': days_of_week} )
-    
+        return render(request, 'upload_menu.html', { **grouped, 'forms': forms, 'days_of_week': days_of_week, **dashboard_data, })
 
     else:
         # Si el usuario no tiene permisos, se redirige a la página de inicio con un mensaje de error.
         return render(request, 'home.html', {'error': 'No tienes permisos para acceder a esta página.'})
-    
-    
-
 
 
 def seleccionados(request):
     if request.user.is_superuser or request.user.username == 'yandry':
-        seleccion = Menuselection.objects.select_related('user', 'menu').order_by('user__username', 'menu__day')
-        grouped_data = groupby(seleccion, key=attrgetter('user.username'))
+        seleccion = Menuselection.objects.select_related(
+            'user', 'menu').order_by('user__username', 'menu__day')
+        #grouped_data = groupby(seleccion, key=attrgetter('user.username'))
 
-        return render(request, 'upload_menu.html', {'seleccion': grouped_data})
-    else:
-        return render(request, 'home.html', {'error': 'No tienes permisos para acceder a esta página.'})
+        grouped_data = {}
+        # Agrupa las selecciones por nombre de usuario.
+        for user, items in groupby(seleccion, key=attrgetter('user.username')):
+            grouped_data[user] = list(items)
+
+        return {'seleccion': grouped_data}
+    
 
 
 # la función recibe una solicitud (request) y un número de identificación (id).
@@ -287,6 +295,46 @@ def detalle_menu(request, menu_id):
         return render(request, 'home.html', {'error': 'Debes tener los permisos necesarios para acceder a esta página.'})
 
 
+def dashboard(request):
+
+    # Menús más seleccionados
+    # parafrasis contextual: dame todos los menus seleccionados y agrupame por menu__option_number y cuenta cuantos hay y ordenalos por total
+    popular_menus = Menuselection.objects.values(
+        'menu__option_number').annotate(total=Count('menu')).order_by('-total')
+
+
+# Selecciones por departamento
+# parafrasis contextual: dame todos los menus seleccionados y agrupame por user__userprofile__department y cuenta cuantos hay y ordenalos por total
+    selections_by_department = Menuselection.objects.values(
+        'user__userprofile__department').annotate(total=Count('id')).order_by('-total')
+
+# Selecciones por día
+# parafrasis contextual: dame todos los menus seleccionados y agrupame por user__user
+    selections_by_day = Menuselection.objects.values(
+        'menu__day').annotate(total=Count('id')).order_by('menu__day')
+
+    selections_by_month = (Menuselection.objects.annotate(mes=TruncMonth('date_selected')).values(
+        'mes').annotate(total=Count('id')).order_by('mes'))
+
+    # Total de usuarios
+    total_users = UserProfile.objects.count()
+
+    # Total de selecciones
+    total_selections = Menuselection.objects.count()
+
+    # Pasar los datos a la plantilla
+    return {
+        'popular_menus': popular_menus,
+        'selections_by_department': selections_by_department,
+        'selections_by_day': selections_by_day,
+        'total_users': total_users,
+        'total_selections': total_selections,
+        'selections_by_month': selections_by_month
+    }
+
+
+
+
 def eliminar_menu(request, menu_id):
     if request.user.is_superuser or request.user.username == 'yandry':
         # Busca un objeto del modelo 'Menu' cuyo 'id' coincida con el valor de 'menu_id'.
@@ -302,15 +350,22 @@ def eliminar_menu(request, menu_id):
 
 @login_required  # decorador que restringue vistas a usuarios no authenticados
 def menu_list(request):
-    
+
     menus = Menu.objects.all()   # Obtiene todos los objetos del modelo 'Menu'
     if request.method == 'POST':   # si el metodo es POST
-        selected_menu_ids = request.POST.getlist('menu')   # Obtiene la lista de IDs de los menús seleccionados
+        # Obtiene la lista de IDs de los menús seleccionados
+        selected_menu_ids = request.POST.getlist('menu')
         for menu_id in selected_menu_ids:    # recorre la lista de IDs de los menús seleccionados
-            selected_menu = get_object_or_404(Menu, id=menu_id)   # Obtiene el objeto del modelo 'Menu' cuyo 'id' coincida con el valor de 'menu_id' o devuelve un error 404 si no se encuentra
-            if not Menuselection.objects.filter(user=request.user, menu=selected_menu).exists():    # Verifica si el usuario actual ya seleccionó el menú
-                Menuselection.objects.create(user=request.user, menu=selected_menu) # Crea un nuevo registro en el modelo 'Menuselection' asignando el usuario actual y el menú seleccionado
-        return redirect('menu_list') #redirecciona a la lista de menu
+            # Obtiene el objeto del modelo 'Menu' cuyo 'id' coincida con el valor de 'menu_id' o devuelve un error 404 si no se encuentra
+            selected_menu = get_object_or_404(Menu, id=menu_id)
+            # Verifica si el usuario actual ya seleccionó el menú
+            if not Menuselection.objects.filter(user=request.user, menu=selected_menu).exists():
+                # Crea un nuevo registro en el modelo 'Menuselection' asignando el usuario actual y el menú seleccionado
+                Menuselection.objects.create(
+                    user=request.user, menu=selected_menu)
+        return redirect('menu_list')  # redirecciona a la lista de menu
 
-    return render(request, 'menu_list.html', {'menus': menus})   # Renderiza la plantilla 'menu_list.html' y pasa la lista de menús a
+    # Renderiza la plantilla 'menu_list.html' y pasa la lista de menús a
+    return render(request, 'menu_list.html', {'menus': menus})
+
 

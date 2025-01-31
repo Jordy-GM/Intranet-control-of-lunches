@@ -2,6 +2,54 @@
 #from django.forms import ModelForm
 from django import forms
 from .models import Task, Menu
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+# Opciones para el campo "departamento"
+DEPARTMENT_CHOICES = [
+    ('Almacén', 'Almacén'),
+    ('Auditoría', 'Auditoría'),
+    ('Calidad y Seguridad', 'Calidad y Seguridad'),
+    ('Capacitación', 'Capacitación'),
+    ('Comunicación Interna', 'Comunicación Interna'),
+    ('Compras', 'Compras'),
+    ('Contabilidad', 'Contabilidad'),
+    ('Control de Calidad', 'Control de Calidad'),
+    ('Diseño', 'Diseño'),
+    ('Finanzas', 'Finanzas'),
+    ('Gerencia', 'Gerencia'),
+    ('Innovación', 'Innovación'),
+    ('Inteligencia de Negocios', 'Inteligencia de Negocios'),
+    ('Investigación y Desarrollo', 'Investigación y Desarrollo'),
+    ('IT', 'IT'),
+    ('Legal', 'Legal'),
+    ('Logística', 'Logística'),
+    ('Mantenimiento', 'Mantenimiento'),
+    ('Marketing', 'Marketing'),
+    ('Materia Prima', 'Materia Prima'),
+    ('Operaciones', 'Operaciones'),
+    ('Planificación Estratégica', 'Planificación Estratégica'),
+    ('Producción', 'Producción'),
+    ('Proyectos', 'Proyectos'),
+    ('Recepción', 'Recepción'),
+    ('Recursos Humanos', 'Recursos Humanos'),
+    ('Relaciones Públicas', 'Relaciones Públicas'),
+    ('Seguridad Industrial', 'Seguridad Industrial'),
+    ('Servicio al Cliente', 'Servicio al Cliente'),
+    ('Soporte Técnico', 'Soporte Técnico'),
+    ('Transporte', 'Transporte'),
+    ('Ventas', 'Ventas'),
+]
+
+class CustomUserCreationForm(UserCreationForm):
+    departamento = forms.ChoiceField(choices=DEPARTMENT_CHOICES, label='Departamento', required=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'password1', 'password2', 'departamento']
+        
+        
+
 
 
 class CreateTaskForm(forms.ModelForm):

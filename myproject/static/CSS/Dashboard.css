@@ -1,0 +1,178 @@
+/* Estilos generales */
+body {
+    font-family: SF Pro Text, Helvetica Neue, sans-serif;
+    background-color: #f5f5f7; /* Establece el color de fondo */
+    color: #1d1d1f; /* Define el color del texto */
+    margin: 0; /* Elimina márgenes */
+    padding: 20px; /* Añade un espacio interno */
+}
+
+h1, h2 {
+    color: #1d1d1f; /* Define el color de los títulos */
+}
+
+.highlight {
+    color: #007aff; /* Color para los elementos destacados */
+    font-weight: bold; /* Hace el texto en negrita */
+}
+
+/* Contenedor de estadísticas */
+.stats-container {
+    display: block;
+    flex-wrap: wrap; /* Permite que los elementos se acomoden en múltiples líneas */
+    gap: 30px; /* Espacio entre los elementos */
+    margin-bottom: 10px; /* Añade un margen inferior */
+    text-align: center; /* Centra el texto */
+    display: block;
+    margin-right: auto; /* Mueve el contenedor a la derecha */
+    width: 50%; /* Ajusta el ancho del contenedor */
+
+}
+
+.stats-card {
+    background-color: #ffffff; /* Color de fondo de las tarjetas */
+    border-radius: 12px; /* Bordes redondeados */
+    padding: 20px; /* Espacio interno de total de usuarios*/
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    flex: 1 1 calc(10% - 10px); /* Establece el tamaño y distribución */
+    width: 30%; /* Reduce el ancho de las tarjetas */
+    margin: 20px auto; /* Espacio externo (margen) */
+    text-align: center; /* Centra el texto */
+    
+}
+
+/* Secciones */
+.section {
+    margin-bottom: 40px; /* Añade un margen inferior */
+}
+
+.section h2 {
+    margin-bottom: 15px; /* Espacio debajo de los subtítulos */
+    font-size: 1.5em; /* Tamaño de la fuente */
+}
+
+
+
+.card ul {
+    list-style-type: none; /* Elimina los puntos de las listas */
+    padding: 0; /* Elimina el padding */
+    margin: 0; /* Elimina el margen */
+}
+
+.card li {
+    padding: 10px 0; /* Espaciado vertical de cada item */
+    border-bottom: 1px solid #e0e0e0; /* Línea separadora */
+}
+
+.card li:last-child {
+    border-bottom: none; /* Elimina la línea en el último item */
+}
+
+/*estilos para las tarjetas de gráficos */
+.card {
+    background-color: #ffffff; /* Color de fondo de las tarjetas */
+    border-radius: 12px; /* Bordes redondeados */
+    padding: 100px; /* Espacio interno de graficos*/
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    display: inline-block; /* Permite que las tarjetas estén alineadas */
+    width: 54%; /* Ancho de la tarjeta */
+    margin: 1%; /* Espacio alrededor de la tarjeta */
+    vertical-align: top; /* Alineación superior */
+    height: 300px; /* Ajusta la altura de las tarjetas */
+}
+
+
+/* Estilos para los gráficos */
+.card canvas {
+    width: 100%; /* Asegura que el canvas ocupe todo el ancho */
+    height: 300%; /* Ajusta la altura automáticamente */
+    max-width: 106%; /* Evita que el canvas se desborde */
+    margin: 0 auto; /* Centra el canvas */
+    display: block; /* Hace que el canvas se muestre como bloque */
+    
+}
+
+/* Estilos específicos para gráficos o secciones adicionales */
+.chart-container {
+    background-color: #ffffff; /* Color de fondo */
+    border-radius: 12px; /* Bordes redondeados */
+    padding: 50px; /* Espacio interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    margin-bottom: 30px; /* Añade un margen inferior */
+}
+
+/* Botones y elementos interactivos */
+.button {
+    background-color: #007aff; /* Color de fondo del botón */
+    color: #ffffff; /* Color del texto */
+    border: none; /* Elimina el borde */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 10px 20px; /* Espaciado interno */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    font-size: 1em; /* Tamaño de la fuente */
+}
+
+.button:hover {
+    background-color: #005bb5; /* Cambia el color de fondo cuando se pasa el cursor */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .stats-card {
+        flex: 1 1 100%; /* Hace que las tarjetas ocupen todo el ancho en pantallas pequeñas */
+    }
+
+    .card {
+        width: 100%; /* Hace que las tarjetas ocupen todo el ancho */
+        margin: 1% 0; /* Ajusta el margen */
+    }
+}
+
+/* Contenedor de los gráficos */
+.graph-container {
+    display: flex; /* Utiliza flexbox para distribuir los elementos */
+    flex-wrap: wrap; /* Permite que los elementos se acomoden en varias filas */
+    gap: 20px; /* Espacio entre los elementos */
+    justify-content: space-around; /* Distribuye los gráficos de manera uniforme */
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+
+}
+
+/* Estilos para cada gráfico */
+.graph {
+    flex: 1 1 100%; /* Ajusta el tamaño de los gráficos */
+    min-width: 1000px; /* Establece un tamaño mínimo más grande */
+    height: 800px; /* Establece una altura mayor */
+    margin: 20px; /* Espacio alrededor de cada gráfico */
+}
+
+/* Ajustes para el contenido interno del gráfico */
+.graph-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.dashboard-container {
+    text-align: center;
+    color: #1F1F1F;
+    margin-bottom: 20px;
+    font-size: 32px;
+    text-transform: capitalize;
+    letter-spacing: -.24px;
+    padding-bottom: 10px;
+    font-family: SF Pro Display, Helvetica Neue, sans-serif;
+    font-weight: 550;
+    line-height: 36px;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    background: linear-gradient(to bottom, #FFFFFF, #FFFFFF); /* Fondo degradado de blanco a gris */
+    border: 1px solid #f4f7fc; /* Borde gris claro */
+    padding: 20px; /* Añade un poco de padding para que el texto no esté pegado al borde */
+    border-radius: 10px; /* Bordes redondeados para un aspecto moderno */
+    background-color: #f4f7fc; /* Fondo gris claro tipo iCloud */
+}
+

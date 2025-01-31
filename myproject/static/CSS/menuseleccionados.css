@@ -42,6 +42,32 @@ button.toggle-button {
     vertical-align: middle; /* Alinea verticalmente */
 }
 
+
+
 button.toggle-button:hover {
     background-color: #f1f1f1;
 }
+
+/* Contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f7fc;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(203, 10, 10, 0.1);
+}
+
+/* Título */
+.title {
+    text-align: center;
+    color: #bd1212;
+    margin-bottom: 20px;
+    font-size: 2em; /* Tamaño de la fuente */
+    font-weight: bold; /* Negrita */
+    text-transform: uppercase; /* Mayúsculas */
+    letter-spacing: 2px; /* Espaciado entre letras */
+    border-bottom: 2px solid #007aff; /* Línea inferior */
+    padding-bottom: 10px; /* Espaciado inferior */
+}
+
